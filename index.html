@@ -1,0 +1,1713 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Incoterms 2020 - BTS Commerce International</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        :root {
+            --primary: #1a365d;
+            --primary-light: #2c5282;
+            --secondary: #38b2ac;
+            --accent: #ed8936;
+            --success: #48bb78;
+            --error: #fc8181;
+            --warning: #ecc94b;
+            --bg-dark: #0d1b2a;
+            --bg-card: #1b2838;
+            --text-light: #e2e8f0;
+            --text-muted: #a0aec0;
+            --gradient-1: linear-gradient(135deg, #1a365d 0%, #2c5282 50%, #38b2ac 100%);
+            --gradient-2: linear-gradient(45deg, #ed8936, #ecc94b);
+            --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-dark);
+            min-height: 100vh;
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, rgba(56, 178, 172, 0.1) 0%, transparent 50%),
+                        radial-gradient(ellipse at 80% 20%, rgba(237, 137, 54, 0.08) 0%, transparent 40%),
+                        radial-gradient(ellipse at 20% 80%, rgba(44, 82, 130, 0.1) 0%, transparent 40%);
+            animation: bgPulse 15s ease-in-out infinite;
+        }
+
+        @keyframes bgPulse {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-5%, -5%) scale(1.1); }
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--secondary);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 20s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-family: 'Space Mono', monospace;
+            font-size: 14px;
+            color: var(--secondary);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeInDown 0.8s ease forwards;
+        }
+
+        .title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 0.2s forwards;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 0.4s forwards;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .welcome-screen {
+            text-align: center;
+            padding: 60px 40px;
+            background: var(--bg-card);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255,255,255,0.05);
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 0.6s forwards;
+        }
+
+        .welcome-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+            background: var(--gradient-1);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            transform: rotate(-5deg);
+            box-shadow: 0 20px 40px rgba(56, 178, 172, 0.3);
+            animation: iconFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes iconFloat {
+            0%, 100% { transform: rotate(-5deg) translateY(0); }
+            50% { transform: rotate(-5deg) translateY(-10px); }
+        }
+
+        .welcome-text {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .input-group {
+            margin-bottom: 30px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: var(--text-light);
+        }
+
+        .input-group input {
+            width: 100%;
+            max-width: 400px;
+            padding: 16px 24px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            background: rgba(56, 178, 172, 0.1);
+            box-shadow: 0 0 20px rgba(56, 178, 172, 0.2);
+        }
+
+        .input-group input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 40px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-2);
+            color: var(--bg-dark);
+            box-shadow: 0 10px 30px rgba(237, 137, 54, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(237, 137, 54, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-light);
+            border: 2px solid var(--secondary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--secondary);
+            color: var(--bg-dark);
+        }
+
+        .quiz-screen {
+            display: none;
+        }
+
+        .progress-container {
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .progress-text {
+            font-family: 'Space Mono', monospace;
+            font-size: 14px;
+            color: var(--secondary);
+        }
+
+        .progress-score {
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-2);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .question-card {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255,255,255,0.05);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: cardAppear 0.5s ease forwards;
+        }
+
+        @keyframes cardAppear {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-number {
+            display: inline-block;
+            padding: 8px 16px;
+            background: var(--gradient-1);
+            border-radius: 8px;
+            font-family: 'Space Mono', monospace;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            font-size: 1.25rem;
+            font-weight: 500;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: var(--text-light);
+        }
+
+        .question-hint {
+            display: inline-block;
+            padding: 6px 12px;
+            background: rgba(56, 178, 172, 0.15);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: var(--secondary);
+            margin-bottom: 25px;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 18px 24px;
+            background: rgba(255,255,255,0.03);
+            border: 2px solid rgba(255,255,255,0.08);
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option:hover:not(.disabled) {
+            background: rgba(56, 178, 172, 0.1);
+            border-color: rgba(56, 178, 172, 0.3);
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            background: rgba(56, 178, 172, 0.15);
+            border-color: var(--secondary);
+        }
+
+        .option.correct {
+            background: rgba(72, 187, 120, 0.15);
+            border-color: var(--success);
+        }
+
+        .option.incorrect {
+            background: rgba(252, 129, 129, 0.15);
+            border-color: var(--error);
+        }
+
+        .option.disabled {
+            cursor: default;
+        }
+
+        .option-checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 6px;
+            margin-right: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .option.selected .option-checkbox {
+            background: var(--secondary);
+            border-color: var(--secondary);
+        }
+
+        .option.correct .option-checkbox {
+            background: var(--success);
+            border-color: var(--success);
+        }
+
+        .option.incorrect .option-checkbox {
+            background: var(--error);
+            border-color: var(--error);
+        }
+
+        .option-checkbox svg {
+            width: 14px;
+            height: 14px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .option.selected .option-checkbox svg,
+        .option.correct .option-checkbox svg,
+        .option.incorrect .option-checkbox svg {
+            opacity: 1;
+        }
+
+        .option-text {
+            flex: 1;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .feedback {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 12px;
+            display: none;
+        }
+
+        .feedback.show {
+            display: block;
+            animation: fadeInUp 0.4s ease;
+        }
+
+        .feedback.success {
+            background: rgba(72, 187, 120, 0.15);
+            border: 1px solid rgba(72, 187, 120, 0.3);
+        }
+
+        .feedback.error {
+            background: rgba(252, 129, 129, 0.15);
+            border: 1px solid rgba(252, 129, 129, 0.3);
+        }
+
+        .feedback.partial {
+            background: rgba(236, 201, 75, 0.15);
+            border: 1px solid rgba(236, 201, 75, 0.3);
+        }
+
+        .feedback-icon {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .feedback-text {
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .feedback-detail {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        .nav-buttons .btn {
+            flex: 1;
+            justify-content: center;
+        }
+
+        .results-screen {
+            display: none;
+        }
+
+        .results-card {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 50px 40px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
+        }
+
+        .results-score {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 40px;
+        }
+
+        .score-circle {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(var(--secondary) var(--score-percent), rgba(255,255,255,0.1) 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .score-circle::before {
+            content: '';
+            position: absolute;
+            width: 160px;
+            height: 160px;
+            background: var(--bg-card);
+            border-radius: 50%;
+        }
+
+        .score-value {
+            position: relative;
+            z-index: 1;
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .score-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        .results-message {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .results-detail {
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            line-height: 1.7;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-item {
+            padding: 25px 15px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .review-section {
+            margin-top: 40px;
+            text-align: left;
+        }
+
+        .review-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .review-item {
+            padding: 20px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border-left: 4px solid;
+        }
+
+        .review-item.correct {
+            border-left-color: var(--success);
+        }
+
+        .review-item.incorrect {
+            border-left-color: var(--error);
+        }
+
+        .review-item.partial {
+            border-left-color: var(--warning);
+        }
+
+        .review-question {
+            font-weight: 500;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .review-status {
+            font-size: 18px;
+        }
+
+        .review-answers {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .review-answers strong {
+            color: var(--text-light);
+        }
+
+        .results-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: 24px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: var(--shadow);
+            animation: modalSlide 0.3s ease;
+        }
+
+        @keyframes modalSlide {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+
+        .modal-text {
+            color: var(--text-muted);
+            margin-bottom: 25px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .copyright {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .welcome-screen,
+            .question-card,
+            .results-card {
+                padding: 30px 20px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .results-actions {
+                flex-direction: column;
+            }
+
+            .results-actions .btn {
+                width: 100%;
+            }
+        }
+
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            opacity: 0;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                opacity: 1;
+                transform: translateY(-100px) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(100vh) rotate(720deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <div class="particles" id="particles"></div>
+    <div class="confetti-container" id="confetti"></div>
+
+    <div class="container">
+        <header class="header">
+            <div class="logo">BTS Commerce International</div>
+            <h1 class="title">Quiz Incoterms 2020</h1>
+            <p class="subtitle">Testez vos connaissances sur les règles du commerce international</p>
+        </header>
+
+        <section class="welcome-screen" id="welcomeScreen">
+            <div class="welcome-icon">🚢</div>
+            <h2 style="font-size: 1.8rem; margin-bottom: 20px;">Bienvenue !</h2>
+            <p class="welcome-text">
+                Ce quiz interactif vous permettra d'évaluer vos connaissances sur les <strong>Incoterms 2020</strong>. 
+                Vous répondrez à <strong>20 questions</strong> portant sur les différents aspects des règles du commerce international.
+                Les questions sont présentées dans un ordre aléatoire. À la fin du quiz, vous pourrez télécharger un <strong>rapport PDF détaillé</strong> de vos résultats.
+            </p>
+            <button class="btn btn-primary" onclick="startQuiz()">
+                <span>Commencer le Quiz</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </button>
+        </section>
+
+        <section class="quiz-screen" id="quizScreen">
+            <div class="progress-container">
+                <div class="progress-info">
+                    <span class="progress-text">Question <span id="currentQ">1</span>/20</span>
+                    <span class="progress-score">Score: <span id="currentScore">0</span> pts</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 5%"></div>
+                </div>
+            </div>
+
+            <div class="question-card" id="questionCard">
+                <span class="question-number" id="questionNumber">Question 1</span>
+                <p class="question-text" id="questionText"></p>
+                <span class="question-hint" id="questionHint"></span>
+                <div class="options-container" id="optionsContainer"></div>
+                
+                <div class="feedback" id="feedback">
+                    <div class="feedback-icon" id="feedbackIcon"></div>
+                    <div class="feedback-text" id="feedbackText"></div>
+                    <div class="feedback-detail" id="feedbackDetail"></div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" id="validateBtn" onclick="validateAnswer()">
+                        Valider ma réponse
+                    </button>
+                    <button class="btn btn-primary hidden" id="nextBtn" onclick="nextQuestion()">
+                        Question suivante
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="results-screen" id="resultsScreen">
+            <div class="results-card">
+                <div class="results-score">
+                    <div class="score-circle" id="scoreCircle">
+                        <div>
+                            <div class="score-value" id="finalScore">0%</div>
+                            <div class="score-label">Score final</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="results-message" id="resultsMessage">Félicitations !</h2>
+                <p class="results-detail" id="resultsDetail"></p>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="correctAnswers">0</div>
+                        <div class="stat-label">Réponses correctes</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="partialAnswers">0</div>
+                        <div class="stat-label">Partiellement correctes</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="incorrectAnswers">0</div>
+                        <div class="stat-label">Réponses incorrectes</div>
+                    </div>
+                </div>
+
+                <div class="review-section">
+                    <h3 class="review-title">📋 Récapitulatif détaillé</h3>
+                    <div id="reviewContainer"></div>
+                </div>
+
+                <div class="results-actions">
+                    <button class="btn btn-primary" onclick="showNameModal()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="12" y1="18" x2="12" y2="12"/>
+                            <line x1="9" y1="15" x2="15" y2="15"/>
+                        </svg>
+                        Télécharger le rapport PDF
+                    </button>
+                    <button class="btn btn-secondary" onclick="restartQuiz()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M1 4v6h6M23 20v-6h-6"/>
+                            <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/>
+                        </svg>
+                        Recommencer
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <div class="copyright">© Christian S. - BTS Commerce International</div>
+    </div>
+
+    <div class="modal-overlay" id="nameModal">
+        <div class="modal-content">
+            <h3 class="modal-title">📄 Génération du rapport PDF</h3>
+            <p class="modal-text">Veuillez entrer votre nom et prénom pour générer votre rapport personnalisé.</p>
+            <div class="input-group">
+                <label for="studentName">Nom et Prénom</label>
+                <input type="text" id="studentName" placeholder="Prénom NOM" required>
+            </div>
+            <button class="btn btn-primary" onclick="generatePDF()" style="width: 100%;">
+                Générer le PDF
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const allQuestions = [
+            {
+                id: 1,
+                text: "Votre client chinois vous demande de livrer sa marchandise à Marseille à bord du navire Sandra Blanca à destination de Shanghai. Quel est l'Incoterm retenu ?",
+                hint: "Question à choix unique",
+                multipleChoice: false,
+                options: [
+                    { id: 'a', text: "FOB Hong Kong" },
+                    { id: 'b', text: "FOB Marseille" },
+                    { id: 'c', text: "CIF Hong Kong" }
+                ],
+                correct: ['b'],
+                explanation: "FOB Marseille est correct car la livraison se fait au port de Marseille, à bord du navire. L'Incoterm FOB indique le lieu d'embarquement de la marchandise."
+            },
+            {
+                id: 2,
+                text: "Vous avez conclu un contrat export CIP Alger. Qui supporte les risques liés au transport aérien de Paris à Alger ?",
+                hint: "Question à choix unique",
+                multipleChoice: false,
+                options: [
+                    { id: 'a', text: "Vous-même, exportateur" },
+                    { id: 'b', text: "Votre client" },
+                    { id: 'c', text: "Le transporteur" }
+                ],
+                correct: ['b'],
+                explanation: "Avec l'Incoterm CIP, le vendeur paie le transport et l'assurance, mais les risques sont transférés à l'acheteur dès la remise des marchandises au premier transporteur."
+            },
+            {
+                id: 3,
+                text: "Les Incoterms définissent pour les deux partenaires commerciaux :",
+                hint: "Question à choix multiples",
+                multipleChoice: true,
+                options: [
+                    { id: 'a', text: "Le transfert de risques" },
+                    { id: 'b', text: "Le transfert de propriété" },
+                    { id: 'c', text: "Le transfert de frais" }
+                ],
+                correct: ['a', 'c'],
+                explanation: "Les Incoterms définissent le transfert des risques et des frais, mais PAS le transfert de propriété qui relève du contrat de vente."
+            },
+            {
+                id: 4,
+                text: "Si vous choisissez pour vos exportations un Incoterm de vente au départ :",
+                hint: "Question à choix unique",
+                multipleChoice: false,
+                options: [
+                    { id: 'a', text: "Vous supporterez les risques du transport principal" },
+                    { id: 'b', text: "Votre client supportera les risques du transport principal" },
+                    { id: 'c', text: "Les risques du transport principal seront partagés entre les deux partenaires" }
+                ],
+                correct: ['b'],
+                explanation: "Dans une vente au départ (EXW, FCA, FAS, FOB, CFR, CIF, CPT, CIP), l'acheteur supporte les risques du transport principal."
+            },
+            {
+                id: 5,
+                text: "Dans le cadre d'une vente EXW :",
+                hint: "Question à choix multiples",
+                multipleChoice: true,
+                options: [
+                    { id: 'a', text: "Votre client peut exiger de vous un emballage respectant des normes précises" },
+                    { id: 'b', text: "Vous n'êtes pas tenu de fournir l'emballage" },
+                    { id: 'c', text: "Vous devez fournir l'emballage adéquat" }
+                ],
+                correct: ['a', 'c'],
+                explanation: "En EXW, le vendeur doit fournir un emballage adéquat et l'acheteur peut exiger des normes précises. Le vendeur ne peut pas se soustraire à cette obligation."
+            },
+            {
+                id: 6,
+                text: "Vous devez expédier par mer des marchandises conteneurisées à un client australien. Celui-ci vous demande de conclure le contrat de transport, et éventuellement de contracter une assurance. Quels sont les Incoterms les plus adaptés ?",
+                hint: "Question à choix multiples",
+                multipleChoice: true,
+                options: [
+                    { id: 'a', text: "CIP" },
+                    { id: 'b', text: "FOB" },
+                    { id: 'c', text: "CIF" },
+                    { id: 'd', text: "CPT" },
+                    { id: 'e', text: "CFR" }
+                ],
+                correct: ['a', 'd'],
+                explanation: "CIP et CPT sont adaptés pour le transport conteneurisé multimodal. CIF et CFR sont réservés au transport maritime traditionnel (non conteneurisé)."
+            },
+            {
+                id: 7,
+                text: "Vous achetez des marchandises FOB Buenos Aires. Vous devez :",
+                hint: "Question à choix multiples",
+                multipleChoice: true,
+                options: [
+                    { id: 'a', text: "Conclure le contrat de transport maritime" },
+                    { id: 'b', text: "Indiquer le nom du navire à votre fournisseur" },
+                    { id: 'c', text: "Payer les droits de douane en France" }
+                ],
+                correct: ['a', 'b', 'c'],
+                explanation: "En tant qu'acheteur FOB, vous devez organiser le transport, communiquer les informations du navire au vendeur, et payer les droits de douane à l'importation."
+            },
+            {
+                id: 8,
+                text: "Vous avez conclu un contrat DPU Montréal avec votre distributeur canadien. Quels documents devez-vous lui fournir ?",
+                hint: "Question à choix multiples",
+                multipleChoice: true,
+                options: [
+                    { id: 'a', text: "Un B/L portant la mention « freight collect »" },
+                    { id: 'b', text: "Un certificat d'assurance" },
+                    { id: 'c', text: "Une facture commerciale" },
+                    { id: 'd', text: "Une licence d'importation" }
+                ],
+                correct: ['a', 'c'],
+                explanation: "En DPU, le vendeur fournit le B/L (freight collect car livré déchargé) et la facture commerciale. L'assurance et la licence d'importation ne sont pas obligatoires pour le vendeur."
+            },
+            {
+                id: 9,
+                text: "Vous devez remettre une offre à un nouveau client brésilien (envoi par avion). Vous souhaitez lui proposer un service maximum sans subir les risques liés à des us et coutumes que vous pourriez ignorer. Quel est l'Incoterm le plus adapté ?",
+                hint: "Question à choix unique",
+                multipleChoice: false,
+                options: [
+                    { id: 'a', text: "DPU" },
+                    { id: 'b', text: "DAP" },
+                    { id: 'c', text: "DDP" },
+                    { id: 'd', text: "CPT" },
+                    { id: 'e', text: "CIP" }
+                ],
+                correct: ['a'],
+                explanation: "DPU (Delivered at Place Unloaded) offre un service maximum tout en évitant les formalités douanières à l'import (contrairement à DDP). Vous livrez déchargé mais l'acheteur gère le dédouanement import."
+            },
+            {
+                id: 10,
+                text: "Dans le cadre d'une vente FCA locaux de l'exportateur, l'exportateur doit :",
+                hint: "Question à choix multiples",
+                multipleChoice: true,
+                options: [
+                    { id: 'a', text: "Effectuer le dédouanement export" },
+                    { id: 'b', text: "Empoter les marchandises dans le conteneur" },
+                    { id: 'c', text: "Réserver le transport principal" }
+                ],
+                correct: ['a', 'b'],
+                explanation: "En FCA locaux du vendeur, l'exportateur doit dédouaner à l'export et charger (empoter) les marchandises. Le transport principal est à la charge de l'acheteur."
+            },
+            {
+                id: 11,
+                text: "L'objectif principal des Incoterms est de :",
+                hint: "Question à choix unique",
+                multipleChoice: false,
+                options: [
+                    { id: 'a', text: "Faciliter le dédouanement" },
+                    { id: 'b', text: "Harmoniser les pratiques commerciales internationales" },
+                    { id: 'c', text: "Réduire les droits de douane" },
+                    { id: 'd', text: "Uniformiser les contrats de transport" }
+                ],
+                correct: ['b'],
+                explanation: "L'objectif principal des Incoterms est d'harmoniser les pratiques commerciales internationales en définissant clairement les obligations, risques et frais entre vendeur et acheteur."
+            },
+            {
+                id: 12,
+                text: "Les incoterms ne peuvent s'utiliser que dans le cadre d'une vente internationale.",
+                hint: "Question Vrai/Faux",
+                multipleChoice: false,
+                options: [
+                    { id: 'a', text: "Vrai" },
+                    { id: 'b', text: "Faux" }
+                ],
+                correct: ['b'],
+                explanation: "Faux. Les Incoterms 2020 peuvent également être utilisés pour des ventes nationales, bien qu'ils soient principalement conçus pour le commerce international."
+            },
+            {
+                id: 13,
+                text: "Les incoterms concernent les obligations des parties à un contrat de vente pour :",
+                hint: "Question à choix multiples",
+                multipleChoice: true,
+                options: [
+                    { id: 'a', text: "La livraison de la marchandise" },
+                    { id: 'b', text: "La répartition des frais et des risques" },
+                    { id: 'c', text: "Le transfert de propriété de la marchandise" }
+                ],
+                correct: ['a', 'b'],
+                explanation: "Les Incoterms définissent les obligations relatives à la livraison et à la répartition des frais/risques. Le transfert de propriété relève du droit applicable au contrat, pas des Incoterms."
+            },
+            {
+                id: 14,
+                text: "Le prix de vente de la marchandise intègre tous les frais inhérents au transport et autres frais (douane, fiscalité...) :",
+                hint: "Question à choix unique",
+                multipleChoice: false,
+                options: [
+                    { id: 'a', text: "Jusqu'au lieu convenu par l'incoterm" },
+                    { id: 'b', text: "Jusqu'à la frontière du pays de départ" },
+                    { id: 'c', text: "Jusqu'aux locaux de l'acheteur" }
+                ],
+                correct: ['a'],
+                explanation: "Le prix de vente intègre les frais jusqu'au lieu convenu par l'Incoterm choisi. Ce lieu varie selon l'Incoterm (usine, port, destination finale, etc.)."
+            },
+            {
+                id: 15,
+                text: "Dans une vente FCA..., les formalités de douane export sont à la charge et de la responsabilité :",
+                hint: "Question à choix unique",
+                multipleChoice: false,
+                options: [
+                    { id: 'a', text: "Du vendeur" },
+                    { id: 'b', text: "De l'acheteur" }
+                ],
+                correct: ['a'],
+                explanation: "En FCA (Free Carrier), le vendeur est responsable des formalités et frais de dédouanement à l'export. L'acheteur prend en charge l'import."
+            },
+            {
+                id: 16,
+                text: "Dans une vente CIF..., le transfert des risques se fait :",
+                hint: "Question à choix unique",
+                multipleChoice: false,
+                options: [
+                    { id: 'a', text: "Marchandises chargées et arrimées sur le navire au port de départ" },
+                    { id: 'b', text: "Marchandises arrivées au port de destination finale et non déchargées" },
+                    { id: 'c', text: "Marchandises déchargées au port de destination finale" }
+                ],
+                correct: ['a'],
+                explanation: "En CIF, le transfert des risques s'effectue lorsque les marchandises sont chargées à bord du navire au port de départ, même si le vendeur paie le fret et l'assurance jusqu'à destination."
+            },
+            {
+                id: 17,
+                text: "L'incoterm CIP... est :",
+                hint: "Question à choix unique",
+                multipleChoice: false,
+                options: [
+                    { id: 'a', text: "Utilisable quel que soit le mode de transport" },
+                    { id: 'b', text: "Non utilisable en transport maritime" },
+                    { id: 'c', text: "Utilisé en transport maritime quand la marchandise est conteneurisée" }
+                ],
+                correct: ['a'],
+                explanation: "CIP (Carriage and Insurance Paid to) est un Incoterm multimodal, utilisable pour tous les modes de transport (maritime, aérien, routier, ferroviaire ou combiné)."
+            },
+            {
+                id: 18,
+                text: "L'incoterm DPU... est un Incoterm :",
+                hint: "Question à choix unique",
+                multipleChoice: false,
+                options: [
+                    { id: 'a', text: "De vente au départ" },
+                    { id: 'b', text: "De vente à l'arrivée" }
+                ],
+                correct: ['b'],
+                explanation: "DPU (Delivered at Place Unloaded) est un Incoterm de vente à l'arrivée. Le vendeur supporte les risques et frais jusqu'à ce que les marchandises soient déchargées au lieu de destination convenu."
+            },
+            {
+                id: 19,
+                text: "Le lieu de transfert des risques dans une vente FOB..., CFR... et CIF... :",
+                hint: "Question à choix unique",
+                multipleChoice: false,
+                options: [
+                    { id: 'a', text: "Est le même" },
+                    { id: 'b', text: "Est différent" }
+                ],
+                correct: ['a'],
+                explanation: "Pour FOB, CFR et CIF, le transfert des risques s'effectue au même endroit : à bord du navire au port d'embarquement. Ce qui diffère, c'est la répartition des frais."
+            },
+            {
+                id: 20,
+                text: "Le coût de revient de la marchandise importée :",
+                hint: "Question à choix unique",
+                multipleChoice: false,
+                options: [
+                    { id: 'a', text: "Est le même quel que soit l'incoterm utilisé" },
+                    { id: 'b', text: "Est plus élevé quand l'incoterm DDP est utilisé" },
+                    { id: 'c', text: "Est moins élevé quand l'incoterm EXW est utilisé" }
+                ],
+                correct: ['a'],
+                explanation: "Le coût de revient total reste le même quel que soit l'Incoterm : seule la répartition des coûts entre vendeur et acheteur change. L'Incoterm n'affecte pas le coût global mais détermine qui paie quoi."
+            }
+        ];
+
+        let questions = [];
+        let currentQuestion = 0;
+        let score = 0;
+        let answers = [];
+        let studentName = '';
+        let startTime = null;
+        let endTime = null;
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        function startQuiz() {
+            questions = shuffleArray(allQuestions);
+            startTime = new Date();
+            document.getElementById('welcomeScreen').classList.add('hidden');
+            document.getElementById('quizScreen').style.display = 'block';
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const q = questions[currentQuestion];
+            const totalQ = questions.length;
+            
+            document.getElementById('currentQ').textContent = currentQuestion + 1;
+            document.getElementById('progressFill').style.width = ((currentQuestion + 1) / totalQ * 100) + '%';
+            document.getElementById('questionNumber').textContent = `Question ${currentQuestion + 1}`;
+            document.getElementById('questionText').textContent = q.text;
+            document.getElementById('questionHint').textContent = q.hint;
+
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+
+            q.options.forEach(opt => {
+                const div = document.createElement('div');
+                div.className = 'option';
+                div.dataset.id = opt.id;
+                div.onclick = () => toggleOption(div, q.multipleChoice);
+                div.innerHTML = `
+                    <div class="option-checkbox">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                    </div>
+                    <span class="option-text">${opt.text}</span>
+                `;
+                container.appendChild(div);
+            });
+
+            document.getElementById('feedback').classList.remove('show', 'success', 'error', 'partial');
+            document.getElementById('validateBtn').classList.remove('hidden');
+            document.getElementById('nextBtn').classList.add('hidden');
+
+            const card = document.getElementById('questionCard');
+            card.style.animation = 'none';
+            card.offsetHeight;
+            card.style.animation = 'cardAppear 0.5s ease forwards';
+        }
+
+        function toggleOption(element, isMultiple) {
+            if (element.classList.contains('disabled')) return;
+
+            if (isMultiple) {
+                element.classList.toggle('selected');
+            } else {
+                document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+                element.classList.add('selected');
+            }
+        }
+
+        function validateAnswer() {
+            const q = questions[currentQuestion];
+            const selected = Array.from(document.querySelectorAll('.option.selected')).map(el => el.dataset.id);
+
+            if (selected.length === 0) {
+                alert('Veuillez sélectionner au moins une réponse.');
+                return;
+            }
+
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.classList.add('disabled');
+                if (q.correct.includes(opt.dataset.id)) {
+                    opt.classList.add('correct');
+                } else if (selected.includes(opt.dataset.id)) {
+                    opt.classList.add('incorrect');
+                }
+            });
+
+            const correctSelected = selected.filter(s => q.correct.includes(s)).length;
+            const incorrectSelected = selected.filter(s => !q.correct.includes(s)).length;
+            const totalCorrect = q.correct.length;
+
+            let questionScore = 0;
+            let status = 'incorrect';
+
+            if (correctSelected === totalCorrect && incorrectSelected === 0) {
+                questionScore = 1;
+                status = 'correct';
+            } else if (correctSelected > 0 && incorrectSelected === 0) {
+                questionScore = correctSelected / totalCorrect;
+                status = 'partial';
+            } else if (correctSelected > incorrectSelected) {
+                questionScore = Math.max(0, (correctSelected - incorrectSelected) / totalCorrect);
+                status = questionScore > 0 ? 'partial' : 'incorrect';
+            }
+
+            score += questionScore;
+            document.getElementById('currentScore').textContent = score.toFixed(1);
+
+            answers.push({
+                questionId: q.id,
+                questionText: q.text,
+                selected: selected,
+                correct: q.correct,
+                status: status,
+                score: questionScore,
+                explanation: q.explanation,
+                options: q.options
+            });
+
+            showFeedback(status, q.explanation);
+
+            document.getElementById('validateBtn').classList.add('hidden');
+            document.getElementById('nextBtn').classList.remove('hidden');
+            
+            if (currentQuestion === questions.length - 1) {
+                document.getElementById('nextBtn').innerHTML = `
+                    Voir les résultats
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                `;
+            }
+        }
+
+        function showFeedback(status, explanation) {
+            const feedback = document.getElementById('feedback');
+            const icon = document.getElementById('feedbackIcon');
+            const text = document.getElementById('feedbackText');
+            const detail = document.getElementById('feedbackDetail');
+
+            feedback.classList.remove('success', 'error', 'partial');
+
+            if (status === 'correct') {
+                feedback.classList.add('success');
+                icon.textContent = '✅';
+                text.textContent = 'Excellent ! Réponse correcte !';
+            } else if (status === 'partial') {
+                feedback.classList.add('partial');
+                icon.textContent = '⚠️';
+                text.textContent = 'Partiellement correct';
+            } else {
+                feedback.classList.add('error');
+                icon.textContent = '❌';
+                text.textContent = 'Réponse incorrecte';
+            }
+
+            detail.textContent = explanation;
+            feedback.classList.add('show');
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            endTime = new Date();
+            document.getElementById('quizScreen').style.display = 'none';
+            document.getElementById('resultsScreen').style.display = 'block';
+
+            const percentage = (score / questions.length) * 100;
+            document.getElementById('scoreCircle').style.setProperty('--score-percent', percentage + '%');
+            document.getElementById('finalScore').textContent = Math.round(percentage) + '%';
+
+            const correct = answers.filter(a => a.status === 'correct').length;
+            const partial = answers.filter(a => a.status === 'partial').length;
+            const incorrect = answers.filter(a => a.status === 'incorrect').length;
+
+            document.getElementById('correctAnswers').textContent = correct;
+            document.getElementById('partialAnswers').textContent = partial;
+            document.getElementById('incorrectAnswers').textContent = incorrect;
+
+            let message, detail;
+            if (percentage >= 80) {
+                message = '🏆 Excellent travail !';
+                detail = 'Vous maîtrisez très bien les Incoterms 2020. Continuez ainsi !';
+                createConfetti();
+            } else if (percentage >= 60) {
+                message = '👍 Bon travail !';
+                detail = 'Vous avez de bonnes bases mais quelques points méritent d\'être revus.';
+            } else if (percentage >= 40) {
+                message = '📚 Peut mieux faire';
+                detail = 'Révisez les différents Incoterms et leurs caractéristiques pour progresser.';
+            } else {
+                message = '💪 Courage !';
+                detail = 'Les Incoterms nécessitent un apprentissage approfondi. N\'hésitez pas à revoir le cours.';
+            }
+
+            document.getElementById('resultsMessage').textContent = message;
+            document.getElementById('resultsDetail').textContent = detail;
+
+            const reviewContainer = document.getElementById('reviewContainer');
+            reviewContainer.innerHTML = '';
+
+            answers.forEach((a, i) => {
+                const selectedTexts = a.options.filter(o => a.selected.includes(o.id)).map(o => o.text);
+                const correctTexts = a.options.filter(o => a.correct.includes(o.id)).map(o => o.text);
+
+                const div = document.createElement('div');
+                div.className = `review-item ${a.status}`;
+                div.innerHTML = `
+                    <div class="review-question">
+                        <span class="review-status">${a.status === 'correct' ? '✅' : a.status === 'partial' ? '⚠️' : '❌'}</span>
+                        <span><strong>Q${i + 1}:</strong> ${a.questionText}</span>
+                    </div>
+                    <div class="review-answers">
+                        <p><strong>Votre réponse :</strong> ${selectedTexts.join(', ')}</p>
+                        ${a.status !== 'correct' ? `<p><strong>Réponse(s) correcte(s) :</strong> ${correctTexts.join(', ')}</p>` : ''}
+                        <p style="margin-top: 8px; font-style: italic;">${a.explanation}</p>
+                    </div>
+                `;
+                reviewContainer.appendChild(div);
+            });
+        }
+
+        function createConfetti() {
+            const container = document.getElementById('confetti');
+            const colors = ['#ed8936', '#38b2ac', '#48bb78', '#ecc94b', '#fc8181'];
+
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = (Math.random() * 10 + 5) + 'px';
+                confetti.style.height = (Math.random() * 10 + 5) + 'px';
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                confetti.style.animation = `confettiFall ${Math.random() * 3 + 2}s ease-out forwards`;
+                confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                container.appendChild(confetti);
+            }
+
+            setTimeout(() => {
+                container.innerHTML = '';
+            }, 5000);
+        }
+
+        function showNameModal() {
+            document.getElementById('nameModal').classList.add('show');
+            document.getElementById('studentName').focus();
+        }
+
+        function generatePDF() {
+            studentName = document.getElementById('studentName').value.trim();
+            if (!studentName) {
+                alert('Veuillez entrer votre nom pour générer le rapport.');
+                return;
+            }
+
+            document.getElementById('nameModal').classList.remove('show');
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('p', 'mm', 'a4');
+            
+            const pageWidth = 210;
+            const pageHeight = 297;
+            const marginLeft = 20;
+            const marginRight = 20;
+            const textWidth = pageWidth - marginLeft - marginRight;
+            
+            const percentage = Math.round((score / questions.length) * 100);
+            const duration = Math.round((endTime - startTime) / 1000 / 60);
+            const dateStr = new Date().toLocaleDateString('fr-FR', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            const primaryColor = [26, 54, 93];
+            const accentColor = [56, 178, 172];
+            const successColor = [72, 187, 120];
+            const errorColor = [220, 80, 80];
+            const warningColor = [200, 160, 50];
+
+            // Header
+            doc.setFillColor(...primaryColor);
+            doc.rect(0, 0, pageWidth, 42, 'F');
+
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(18);
+            doc.setFont('helvetica', 'bold');
+            doc.text('RAPPORT DE QUIZ INCOTERMS 2020', pageWidth / 2, 18, { align: 'center' });
+            doc.setFontSize(10);
+            doc.setFont('helvetica', 'normal');
+            doc.text('BTS Commerce International', pageWidth / 2, 30, { align: 'center' });
+
+            // Student info
+            doc.setFillColor(245, 247, 250);
+            doc.roundedRect(marginLeft, 50, textWidth, 24, 2, 2, 'F');
+            
+            doc.setTextColor(50, 50, 50);
+            doc.setFontSize(9);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Etudiant(e) :', marginLeft + 4, 60);
+            doc.setFont('helvetica', 'normal');
+            doc.text(studentName, marginLeft + 28, 60);
+            
+            doc.setFont('helvetica', 'bold');
+            doc.text('Date :', marginLeft + 4, 68);
+            doc.setFont('helvetica', 'normal');
+            doc.text(dateStr, marginLeft + 16, 68);
+            
+            doc.setFont('helvetica', 'bold');
+            doc.text('Duree :', marginLeft + 115, 60);
+            doc.setFont('helvetica', 'normal');
+            doc.text(`${duration} min`, marginLeft + 130, 60);
+
+            // Score boxes
+            const scoreColor = percentage >= 60 ? successColor : percentage >= 40 ? warningColor : errorColor;
+            doc.setFillColor(...scoreColor);
+            doc.roundedRect(marginLeft, 82, 38, 28, 2, 2, 'F');
+            
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(20);
+            doc.setFont('helvetica', 'bold');
+            doc.text(`${percentage}%`, marginLeft + 19, 98, { align: 'center' });
+            doc.setFontSize(7);
+            doc.text('SCORE', marginLeft + 19, 106, { align: 'center' });
+
+            const correct = answers.filter(a => a.status === 'correct').length;
+            const partial = answers.filter(a => a.status === 'partial').length;
+            const incorrect = answers.filter(a => a.status === 'incorrect').length;
+
+            doc.setFillColor(...successColor);
+            doc.roundedRect(marginLeft + 42, 82, 32, 28, 2, 2, 'F');
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(14);
+            doc.text(`${correct}`, marginLeft + 58, 97, { align: 'center' });
+            doc.setFontSize(6);
+            doc.text('Correctes', marginLeft + 58, 106, { align: 'center' });
+
+            doc.setFillColor(...warningColor);
+            doc.roundedRect(marginLeft + 78, 82, 32, 28, 2, 2, 'F');
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(14);
+            doc.text(`${partial}`, marginLeft + 94, 97, { align: 'center' });
+            doc.setFontSize(6);
+            doc.text('Partielles', marginLeft + 94, 106, { align: 'center' });
+
+            doc.setFillColor(...errorColor);
+            doc.roundedRect(marginLeft + 114, 82, 32, 28, 2, 2, 'F');
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(14);
+            doc.text(`${incorrect}`, marginLeft + 130, 97, { align: 'center' });
+            doc.setFontSize(6);
+            doc.text('Incorrectes', marginLeft + 130, 106, { align: 'center' });
+
+            // Appreciation
+            let appreciation = '';
+            if (percentage >= 80) appreciation = 'Excellent - Maitrise des Incoterms';
+            else if (percentage >= 60) appreciation = 'Bien - Bases solides a consolider';
+            else if (percentage >= 40) appreciation = 'Insuffisant - Revisions necessaires';
+            else appreciation = 'Tres insuffisant - Cours a revoir';
+
+            doc.setFillColor(245, 247, 250);
+            doc.roundedRect(marginLeft, 116, textWidth, 10, 2, 2, 'F');
+            doc.setTextColor(...primaryColor);
+            doc.setFontSize(9);
+            doc.setFont('helvetica', 'bold');
+            doc.text(`Appreciation : ${appreciation}`, pageWidth / 2, 123, { align: 'center' });
+
+            // Title
+            doc.setTextColor(...primaryColor);
+            doc.setFontSize(11);
+            doc.setFont('helvetica', 'bold');
+            doc.text('DETAIL DES REPONSES', marginLeft, 138);
+            
+            doc.setDrawColor(...accentColor);
+            doc.setLineWidth(0.4);
+            doc.line(marginLeft, 141, pageWidth - marginRight, 141);
+
+            // Questions
+            let yPos = 150;
+            const maxTextWidth = textWidth - 10;
+
+            answers.forEach((a, i) => {
+                if (yPos > pageHeight - 35) {
+                    doc.addPage();
+                    yPos = 20;
+                }
+
+                const statusColor = a.status === 'correct' ? successColor : a.status === 'partial' ? warningColor : errorColor;
+                const bgColor = a.status === 'correct' ? [235, 255, 240] : a.status === 'partial' ? [255, 248, 230] : [255, 235, 235];
+                
+                // Question text
+                doc.setFontSize(8);
+                const qText = `Q${i + 1}: ${a.questionText}`;
+                const splitQ = doc.splitTextToSize(qText, maxTextWidth);
+                
+                const selectedTexts = a.options.filter(o => a.selected.includes(o.id)).map(o => o.text);
+                const correctTexts = a.options.filter(o => a.correct.includes(o.id)).map(o => o.text);
+                
+                let blockHeight = splitQ.length * 3.5 + 14;
+                if (a.status !== 'correct') blockHeight += 5;
+
+                if (yPos + blockHeight > pageHeight - 20) {
+                    doc.addPage();
+                    yPos = 20;
+                }
+
+                // Background
+                doc.setFillColor(...bgColor);
+                doc.roundedRect(marginLeft, yPos - 2, textWidth, blockHeight, 2, 2, 'F');
+                
+                // Status bar
+                doc.setFillColor(...statusColor);
+                doc.rect(marginLeft, yPos - 2, 2.5, blockHeight, 'F');
+
+                // Question
+                doc.setTextColor(40, 40, 40);
+                doc.setFont('helvetica', 'bold');
+                doc.text(splitQ, marginLeft + 6, yPos + 2);
+                yPos += splitQ.length * 3.5 + 2;
+
+                // Student answer
+                const answerText = selectedTexts.join(', ');
+                doc.setFillColor(...(a.status === 'correct' ? [200, 255, 210] : [255, 200, 200]));
+                
+                doc.setFont('helvetica', 'bold');
+                doc.setFontSize(8);
+                doc.setTextColor(...(a.status === 'correct' ? [30, 100, 50] : [180, 50, 50]));
+                
+                const answerLabel = 'Reponse donnee : ';
+                const splitAnswer = doc.splitTextToSize(answerLabel + answerText, maxTextWidth);
+                doc.text(splitAnswer, marginLeft + 6, yPos + 1);
+                yPos += splitAnswer.length * 3.5 + 1;
+
+                // Correct answer
+                if (a.status !== 'correct') {
+                    doc.setTextColor(...successColor);
+                    doc.setFont('helvetica', 'normal');
+                    doc.setFontSize(7);
+                    const correctLabel = 'Reponse attendue : ';
+                    const correctText = correctTexts.join(', ');
+                    const splitCorrect = doc.splitTextToSize(correctLabel + correctText, maxTextWidth);
+                    doc.text(splitCorrect, marginLeft + 6, yPos + 1);
+                    yPos += splitCorrect.length * 3;
+                }
+
+                yPos += 7;
+            });
+
+            // Footer
+            const pageCount = doc.internal.getNumberOfPages();
+            for (let i = 1; i <= pageCount; i++) {
+                doc.setPage(i);
+                doc.setFontSize(7);
+                doc.setTextColor(120, 120, 120);
+                doc.text(`Page ${i}/${pageCount}`, pageWidth / 2, pageHeight - 8, { align: 'center' });
+                doc.text('© Christian S. - BTS Commerce International', marginLeft, pageHeight - 8);
+            }
+
+            const safeName = studentName.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '_');
+            doc.save(`Quiz_Incoterms_${safeName}_${new Date().toISOString().split('T')[0]}.pdf`);
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            answers = [];
+            startTime = null;
+            endTime = null;
+
+            document.getElementById('resultsScreen').style.display = 'none';
+            document.getElementById('quizScreen').style.display = 'none';
+            document.getElementById('welcomeScreen').classList.remove('hidden');
+            document.getElementById('currentScore').textContent = '0';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+        });
+
+        document.getElementById('studentName').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') generatePDF();
+        });
+
+        document.getElementById('nameModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('nameModal')) {
+                document.getElementById('nameModal').classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>
